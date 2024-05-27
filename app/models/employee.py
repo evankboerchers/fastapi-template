@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import Base
+from .employee_project_association import employee_project_association
 
 class Employee(Base):
     __tablename__ = 'employees'
@@ -12,10 +13,8 @@ class Employee(Base):
     email = Column(String, unique=True, index=True)
     phone_number = Column(String)
     address = Column(String)
-    department_id = Column(Integer, ForeignKey('departments.department_id'))
     position = Column(String)
 
-    department = relationship("Department", back_populates="employees")
     salaries = relationship("Salary", back_populates="employee")
-    attendances = relationship("Attendance", back_populates="employee")
     leaves = relationship("Leave", back_populates="employee")
+    projects = relationship("Project", secondary=employee_project_association, back_populates="employees")

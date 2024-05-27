@@ -1,0 +1,4 @@
+leave_id,employee_id,leave_type,start_date,end_date,status,comments
+1,1,Sick,2024-05-01,2024-05-07,Approved,Sick leave due to flu
+2,2,Vacation,2024-06-01,2024-06-14,Pending,Annual vacation
+3,3,Sick,2024-05-15,2024-05-20,Approved,Sick leave due to surgery

@@ -1,0 +1,5 @@
+employee_id,first_name,last_name,date_of_birth,email,phone_number,address,position
+1,John,Doe,1980-01-01,john.doe@example.com,1234567890,123 Elm St,Manager
+2,Jane,Smith,1985-02-14,jane.smith@example.com,0987654321,456 Oak St,Developer
+3,Emily,Jones,1990-03-30,emily.jones@example.com,5555555555,789 Pine St,Designer
+4,Michael,Brown,1995-04-25,michael.brown@example.com,4444444444,101 Maple St,Tester

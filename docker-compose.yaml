@@ -3,7 +3,7 @@ version: '3'
 services:
   postgres:
     image: postgres:latest
-    container_name: my-postgres-container
+    container_name: fastapp-container
     environment:
       POSTGRES_PASSWORD: password
     ports:
