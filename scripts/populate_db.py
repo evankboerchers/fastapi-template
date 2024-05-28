@@ -7,9 +7,9 @@ from sqlalchemy_utils import database_exists, create_database
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
-from app.models import Base, Employee, Leave, Project, Salary, employee_project_association
+from app.models import Employee, Leave, Project, Salary, employee_project_association
 
-DATABASE_URL = "postgresql://postgres:password@localhost/fastapp"  # Update with your PostgreSQL credentials
+DATABASE_URL = "postgresql://postgres:password@localhost/fastapp"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
