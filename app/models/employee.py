@@ -1,12 +1,13 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
+
+from app.models.mixins import UUIDPKMixin
 from .base import Base
 from .employee_project_association import employee_project_association
 
-class Employee(Base):
+class Employee(Base, UUIDPKMixin):
     __tablename__ = 'employees'
 
-    employee_id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String)
     last_name = Column(String)
     date_of_birth = Column(Date)

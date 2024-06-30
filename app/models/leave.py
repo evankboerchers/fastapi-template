@@ -1,12 +1,13 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
+
+from app.models.mixins import UUIDPKMixin
 from .base import Base
 
-class Leave(Base):
+class Leave(Base, UUIDPKMixin):
     __tablename__ = 'leaves'
 
-    leave_id = Column(Integer, primary_key=True, index=True)
-    employee_id = Column(Integer, ForeignKey('employees.employee_id'))
+    employee_uuid = Column(Integer, ForeignKey('employees.uuid'))
     leave_type = Column(String)
     start_date = Column(Date)
     end_date = Column(Date)

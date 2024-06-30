@@ -9,7 +9,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
 from app.models import Employee, Leave, Project, Salary, employee_project_association
 
-DATABASE_URL = "postgresql://postgres:password@localhost/fastapp"
+DATABASE_URL = "postgresql://postgres:password@localhost:5111/fastapp"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -26,7 +26,7 @@ def import_employees(session, file_path):
         reader = csv.DictReader(file)
         for row in reader:
             employee = Employee(
-                employee_id=row['employee_id'],
+                uuid=row['uuid'],
                 first_name=row['first_name'],
                 last_name=row['last_name'],
                 date_of_birth=row['date_of_birth'],
@@ -42,7 +42,7 @@ def import_projects(session, file_path):
         reader = csv.DictReader(file)
         for row in reader:
             project = Project(
-                project_id=row['project_id'],
+                uuid=row['uuid'],
                 project_name=row['project_name'],
                 description=row['description'],
                 start_date=row['start_date'],
@@ -55,8 +55,8 @@ def import_leaves(session, file_path):
         reader = csv.DictReader(file)
         for row in reader:
             leave = Leave(
-                leave_id=row['leave_id'],
-                employee_id=row['employee_id'],
+                uuid=row['uuid'],
+                employee_uuid=row['employee_uuid'],
                 leave_type=row['leave_type'],
                 start_date=row['start_date'],
                 end_date=row['end_date'],
@@ -70,8 +70,8 @@ def import_salaries(session, file_path):
         reader = csv.DictReader(file)
         for row in reader:
             salary = Salary(
-                salary_id=row['salary_id'],
-                employee_id=row['employee_id'],
+                uuid=row['uuid'],
+                employee_uuid=row['employee_uuid'],
                 salary_amount=row['salary_amount'],
                 start_date=row['start_date'],
                 end_date=row['end_date']
@@ -82,10 +82,15 @@ def import_employee_projects(session, file_path):
     with open(file_path, mode='r') as file:
         reader = csv.DictReader(file)
         for row in reader:
-            employee_id = row['employee_id']
-            project_id = row['project_id']
-            stmt = employee_project_association.insert().values(employee_id=employee_id, project_id=project_id)
+            employee_uuid = row['employee_uuid']
+            project_uuid = row['project_uuid']
+            stmt = employee_project_association.insert().values(employee_uuid=employee_uuid, project_uuid=project_uuid)
             session.execute(stmt)
+
+def clear_all_tables(session):
+    """Custom rollback function to clear all tables."""
+    session.execute("TRUNCATE TABLE employees, projects, leaves, salaries, employee_project_association RESTART IDENTITY CASCADE")
+    session.commit()
 
 def main():
     session = SessionLocal()
@@ -101,12 +106,13 @@ def main():
 
         import_employee_projects(session, 'data/db_init/employee_project_association.csv')
         session.commit() 
+        print("Sucessfully populated db")
     except Exception as e:
-        session.rollback() 
-        print(f"An error occurred: {e}")
+        clear_all_tables()
+        session.rollback()
+        raise e
     finally:
         session.close()
-        print("Sucessfully populated db")
 
 if __name__ == "__main__":
     main()

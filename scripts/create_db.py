@@ -8,7 +8,7 @@ sys.path.append(project_root)
 
 from app.models import Base, Employee, Leave, Project, Salary, employee_project_association
 
-DATABASE_URL = "postgresql://postgres:password@localhost/fastapp"
+DATABASE_URL = "postgresql://postgres:password@localhost:5111/fastapp"
 engine = create_engine(DATABASE_URL)
 
 if not database_exists(engine.url):
@@ -18,6 +18,7 @@ def create_database():
     metadata = MetaData()
     metadata.create_all(bind=engine, tables=[Employee.__table__, Leave.__table__, Project.__table__, Salary.__table__])
     metadata.create_all(bind=engine, tables=[employee_project_association])
+    print('successfully created database')
 
 if __name__ == "__main__":
     create_database()
