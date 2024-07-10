@@ -10,8 +10,9 @@ class CRUDBase[ModelType: Base, CreateSchemaType: BaseModel, UpdateSchemaType: B
 
     def __init__(self, model: ModelType, pk: Column):
         self.model = model
-        self.pk = pk
+        self.pk = pk if pk else model.uuid
     
+    #TODO: Make pk not any. Match db schema
     def get(self, db: Session, pk: Any) -> ModelType:
         return db.query(self.model).filter(self.pk == pk).first()
 

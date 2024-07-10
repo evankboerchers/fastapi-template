@@ -1,8 +1,6 @@
 from typing import List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel
-
 
 class Project(BaseModel):
     project_uuid: UUID
