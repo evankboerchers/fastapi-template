@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, Request
-from app.schemas import Department
 from app.api.dependencies.db import get_db
 from sqlalchemy.orm import Session
 
+from app.schemas.employee import Employee
+
 router = APIRouter(
-    prefix='/projects', tags=['projects']]
+    prefix='/employees', tags=['employees']
 )
 
-@router.get("/{id}", response_model=Department)
-def get_project(request: Request, id: str, db: Session = Depends(get_db)) -> Department:
-
+@router.get("/{id}", response_model=Employee)
+def get_project(request: Request, id: str, db: Session = Depends(get_db)) -> Employee:
     return 

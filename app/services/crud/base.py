@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, List, Optional
 from pydantic import BaseModel
 from sqlalchemy import Column
 from sqlalchemy.orm import Session
@@ -8,7 +8,7 @@ from app.models.base import Base
 
 class CRUDBase[ModelType: Base, CreateSchemaType: BaseModel, UpdateSchemaType: BaseModel]():
 
-    def __init__(self, model: ModelType, pk: Column):
+    def __init__(self, model: ModelType, pk: Optional[Column] = None ):
         self.model = model
         self.pk = pk if pk else model.uuid
     

@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Request
-from app.schemas import Department
+
+from app.schemas.salary import Salary
 
 router = APIRouter(
-    prefix='/projects', tags=['projects']
+    prefix='/salaries', tags=['salaries']
 )
 
-@router.get("/{id}", response_model=Department)
-def get_project(request: Request, id: str) -> Department:
-    return crud.
+@router.get("/{id}", response_model=Salary)
+def get_project(request: Request, id: str) -> Salary:
+    return 

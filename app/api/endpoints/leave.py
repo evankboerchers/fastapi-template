@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Request
-from app.schemas import Department
+from app.schemas.leave import Leave 
 
 router = APIRouter(
-    prefix='/projects', tags=['projects']
+    prefix='/leaves', tags=['leaves']
 )
 
-@router.get("/{id}", response_model=Department)
-def get_project(request: Request, id: str) -> Department:
-    return crud.
+@router.get("/{id}", response_model=Leave)
+def get_project(request: Request, id: str) -> Leave:
+    return 
