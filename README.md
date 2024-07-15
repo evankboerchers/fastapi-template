@@ -7,3 +7,4 @@
 - Error handling
 - Logging
 - db session pool
+- pagination

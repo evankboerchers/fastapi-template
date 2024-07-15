@@ -21,23 +21,27 @@ class CRUDBase[ModelType: Base, CreateSchemaType: BaseModel, UpdateSchemaType: B
         return db.query(self.model).all()
     
     def create(self, db: Session, obj: CreateSchemaType) -> ModelType:
-        data = self.extract_object_data(jsonable_encoder(obj), self.model)
-        obj = self.model(**data)
-        db.add(obj)
+        data = jsonable_encoder(obj)
+        # TODO: how to create associations
+        data = self.extract_model_data(data)
+        db_obj = self.model(**data)
+        db.add(db_obj)
         db.commit()
-        db.refresh(obj)
-        return obj
+        db.refresh(db_obj)
+        return db_obj
     
     def update(self, db: Session, pk: Any, obj: UpdateSchemaType) -> ModelType:
-        obj = self.get(db=db, pk=pk)
-        data = self.extract_object_data(jsonable_encoder(obj), self.model)
-        for field in obj:
-            if field in data:
+        data = jsonable_encoder(obj)
+        data = self.extract_model_data(data)
+        # TODO: How to avoid reseting fields via non explicit none.
+        db_obj = self.get(db=db, pk=pk)
+        for field in data:
+            if field in db_obj.__dict__:
                 setattr(obj, field, data[field])
-        db.add(obj)
+        db.add(db_obj)
         db.commit()
-        db.refresh(obj)
-        return obj
+        db.refresh(db_obj)
+        return db_obj
     
     def delete(self, db: Session, pk: Any) -> ModelType:
         obj = self.get(db=db, pk=pk)
@@ -45,16 +49,16 @@ class CRUDBase[ModelType: Base, CreateSchemaType: BaseModel, UpdateSchemaType: B
         db.commit()
         return obj
 
-    def extract_object_data(obj_in_data, model):            
+    def extract_model_data(self, data: BaseModel):            
         """
         Extract all relevant key value pairs from a dictionary for a model.
 
         :param obj_in_data: data to extract
         :param model: model class
         """
-        obj_cols = [col.name for col in model.__mapper__.columns]
+        obj_cols = [col.name for col in self.model.__mapper__.columns]
         out_data = {}
-        for k, v in obj_in_data.items():
+        for k, v in data.items():
             if k in obj_cols:
                 out_data[k] = v
         return out_data

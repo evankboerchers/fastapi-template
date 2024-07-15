@@ -22,8 +22,8 @@ class ProjectCreate(BaseModel):
     employees: List[UUID]
 
 class ProjectUpdate(BaseModel):
-    project_name: Optional[str]
-    description: Optional[str]
-    start_date: Optional[datetime]
-    end_date: Optional[datetime]
-    employees: Optional[List[UUID]]
+    project_name: Optional[str] = None
+    description: Optional[str] = None
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+    employees: Optional[List[UUID]] = None
