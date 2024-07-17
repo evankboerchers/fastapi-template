@@ -31,13 +31,13 @@ class CRUDBase[ModelType: Base, CreateSchemaType: BaseModel, UpdateSchemaType: B
         return db_obj
     
     def update(self, db: Session, pk: Any, obj: UpdateSchemaType) -> ModelType:
-        data = jsonable_encoder(obj)
+        data = jsonable_encoder(obj, exclude_unset=True)
         data = self.extract_model_data(data)
         # TODO: How to avoid reseting fields via non explicit none.
         db_obj = self.get(db=db, pk=pk)
         for field in data:
             if field in db_obj.__dict__:
-                setattr(obj, field, data[field])
+                setattr(db_obj, field, data[field])
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
