@@ -1,0 +1,5 @@
+uuid,first_name,last_name,date_of_birth,email,phone_number,address,position
+edaa2d40-aea9-44dd-a054-c2be99941277,John,Doe,1980-01-01,john.doe@example.com,1234567890,123 Elm St,Manager
+90c9bec0-c336-429b-a795-4069c6f4b309,Jane,Smith,1985-02-14,jane.smith@example.com,0987654321,456 Oak St,Developer
+6290abcd-fcfe-44be-a7a2-c7733daf62fd,Emily,Jones,1990-03-30,emily.jones@example.com,5555555555,789 Pine St,Designer
+fa744e58-9f4f-4299-adb9-8e08f9431f27,Michael,Brown,1995-04-25,michael.brown@example.com,4444444444,101 Maple St,Tester

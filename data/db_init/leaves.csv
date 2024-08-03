@@ -1,0 +1,4 @@
+uuid,employee_uuid,leave_type,start_date,end_date,status,comments
+caddc695-0b55-44e2-ae1b-fa3ba3f83ee2,edaa2d40-aea9-44dd-a054-c2be99941277,Sick,2024-05-01,2024-05-07,Approved,Sick leave due to flu
+71836661-feff-4b3a-b373-102e0017c9b0,90c9bec0-c336-429b-a795-4069c6f4b309,Vacation,2024-06-01,2024-06-14,Pending,Annual vacation
+32a0821d-7323-4555-a60c-7594b0206adf,6290abcd-fcfe-44be-a7a2-c7733daf62fd,Sick,2024-05-15,2024-05-20,Approved,Sick leave due to surgery
